@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Attendance Tracker - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.0.2/tesseract.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Firebase SDK -->
+       <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <style>
+        .department-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .department-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+        .department-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            width: 45%;
+            background-color: #f9f9f9;
+            text-align: center;
+            cursor: pointer;
+        }
+        .year-list-container {
+            display: none; /* Initially hidden */
+            margin-top: 10px;
+        }
+        .upload-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            justify-content: center;
+            width: 100px;
+        }
+        .file-upload {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">AI Attendance Tracker</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="upload.html">Upload Image</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Welcome to AI-Powered Attendance Tracker</h1>
+        <p>Automate attendance tracking with AI, OCR, and real-time notifications.</p>
+    </div>
+
+    <!-- Department Sections -->
+    <div class="department-container">
+
+        <!-- First Row -->
+        <div class="department-row">
+            <!-- EEE Department -->
+            <section id="eee" class="department-section" onclick="toggleYearList('eee')">
+                <h2>EEE Department</h2>
+                <div class="year-list-container" id="eee-years">
+                <ul class="year-list">
+                    <li>1st Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'EEE', '1st Year')">
+                        <button onclick="uploadFile('EEE', '1st Year')">Upload</button>
+                    </li>
+                    <li>2nd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'EEE', '2nd Year')">
+                        <button onclick="uploadFile('EEE', '2nd Year')">Upload</button>
+                    </li>
+                    <li>3rd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'EEE', '3rd Year')">
+                        <button onclick="uploadFile('EEE', '3rd Year')">Upload</button>
+                    </li>
+                    <li>4th Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'EEE', '4th Year')">
+                        <button onclick="uploadFile('EEE', '4th Year')">Upload</button>
+                    </li>
+                </ul>
+                </div>
+            </section>
+
+            <!-- CSE Department -->
+                <section id="cse" class="department-section" onclick="toggleYearList('cse')">
+                <h2>CSE Department</h2>
+                <div class="year-list-container" id="cse-years">
+                <ul class="year-list">
+                    <li>1st Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'CSE', '1st Year')">
+                        <button onclick="uploadFile('CSE', '1st Year')">Upload</button>
+                    </li>
+                    <li>2nd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'CSE', '2nd Year')">
+                        <button onclick="uploadFile('CSE', '2nd Year')">Upload</button>
+                    </li>
+                    <li>3rd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'CSE', '3rd Year')">
+                        <button onclick="uploadFile('CSE', '3rd Year')">Upload</button>
+                    </li>
+                    <li>4th Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'CSE', '4th Year')">
+                        <button onclick="uploadFile('CSE', '4th Year')">Upload</button>
+                    </li>
+                </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Second Row -->
+        <div class="department-row">
+            <!-- ECE Department -->
+            <section id="ece" class="department-section" onclick="toggleYearList('ece')">
+                <h2>ECE Department</h2>
+                <div class="year-list-container" id="ece-years">
+                <ul class="year-list">
+                    <li>1st Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'ECE', '1st Year')">
+                        <button onclick="uploadFile('ECE', '1st Year')">Upload</button>
+                    </li>
+                    <li>2nd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'ECE', '2nd Year')">
+                        <button onclick="uploadFile('ECE', '2nd Year')">Upload</button>
+                    </li>
+                    <li>3rd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'ECE', '3rd Year')">
+                        <button onclick="uploadFile('ECE', '3rd Year')">Upload</button>
+                    </li>
+                    <li>4th Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'ECE', '4th Year')">
+                        <button onclick="uploadFile('ECE', '4th Year')">Upload</button>
+                    </li>
+                </ul>
+                </ul>
+                </div>
+            </section>
+
+            <!-- AIDS Department -->
+            <section id="aids" class="department-section" onclick="toggleYearList('aids')">
+                <h2>AIDS Department</h2>
+                <div class="year-list-container" id="aids-years">
+                <ul class="year-list">
+                    <li>1st Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'AIDS', '1st Year')">
+                        <button onclick="uploadFile('AIDS', '1st Year')">Upload</button>
+                    </li>
+                    <li>2nd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'AIDS', '2nd Year')">
+                        <button onclick="uploadFile('AIDS', '2nd Year')">Upload</button>
+                    </li>
+                    <li>3rd Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'AIDS', '3rd Year')">
+                        <button onclick="uploadFile('AIDS', '3rd Year')">Upload</button>
+                    </li>
+                    <li>4th Year 
+                        <input type="file" class="file-upload" onchange="extractText(event, 'AIDS', '4th Year')">
+                        <button onclick="uploadFile('AIDS', '4th Year')">Upload</button>
+                    </li>
+                    </ul>
+                </ul>
+            </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        feather.replace();
+
+        function toggleYearList(department) {
+            const yearList = document.getElementById(department + "-years");
+            yearList.style.display = (yearList.style.display === "none" || yearList.style.display === "") ? "block" : "none";
+        }
+
+        function extractText(event) {
+            const file = event.target.files[0];
+            if (file) {
+                Tesseract.recognize(URL.createObjectURL(file), 'eng')
+                    .then(({ data: { text } }) => console.log("Extracted Text:", text))
+                    .catch(error => console.error("Error:", error));
+            }
+        }
+    </script>
+
+    
+
+    
+</body>
+</html>
